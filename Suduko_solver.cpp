@@ -1,6 +1,3 @@
-
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -18,10 +15,13 @@ public:
 };
 
 void Sudoku::inputGrid() {
-    cout<<"Enter the Sudoku grid (9x9) row by row, using 0 for empty cells:\n";
+    cout<<"Enter the Sudoku grid (9x9) row by row, using '_' for empty cells:\n";
     for(int i=0;i<9;i++)
-        for(int j=0;j<9;j++)
-            cin>>grid[i][j];
+        for(int j=0;j<9;j++) {
+            string val;
+            cin>>val;
+            grid[i][j] = (val == "_") ? 0 : stoi(val);
+        }
 }
 
 void Sudoku::inputFromFile(const string& filename) {
@@ -31,8 +31,11 @@ void Sudoku::inputFromFile(const string& filename) {
         exit(1);
     }
     for(int i=0;i<9;i++)
-        for(int j=0;j<9;j++)
-            file>>grid[i][j];
+        for(int j=0;j<9;j++) {
+            string val;
+            file>>val;
+            grid[i][j] = (val == "_") ? 0 : stoi(val);
+        }
     file.close();
 }
 
@@ -85,7 +88,10 @@ void Sudoku::printGrid() {
     for(int i=0;i<9;i++) {
         cout<<"| ";
         for(int j=0;j<9;j++) {
-            cout<<grid[i][j]<<" ";
+            if(grid[i][j] == 0)
+                cout<<"_ ";
+            else
+                cout<<grid[i][j]<<" ";
             if((j+1)%3==0) cout<<"| ";
         }
         cout<<"\n";
